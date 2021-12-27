@@ -2,7 +2,7 @@ import { createContext, useReducer} from "react";
 import githubReducer from "./GithubReducer";
 const GithubContext=createContext()
 
-export const GithubProvider=({children})=>{
+export const GithubProvider=({children})=>{ 
     const initialState={
         users:[],
         loading:false
@@ -10,18 +10,19 @@ export const GithubProvider=({children})=>{
     const [state, dispatch]= useReducer(githubReducer, initialState)
 
 
-    const fetchUsers=async()=>{
+    const searchUsers=async(text)=>{
+        console.log({text});
         setLoading()
-        const response=await fetch('https://api.github.com/users')
-        const data=await response.json()
+        const response=await fetch(`https://api.github.com/search/users?q=${text}`)
+        const {items}=await response.json()
         dispatch({
             type:'GET_USERS',
-            payload:data
+            payload:items
         })
-        console.log({data})
     }
     const setLoading=()=>dispatch({type:'SET_LOADING'})
-    return <GithubContext.Provider value={{users:state.users, loading:state.loading, fetchUsers}}>
+    const clearUsers=()=>dispatch({type:'CLEAR_USERS'})
+    return <GithubContext.Provider value={{users:state.users, loading:state.loading, searchUsers,clearUsers}}>
         {children}
     </GithubContext.Provider>
 }
