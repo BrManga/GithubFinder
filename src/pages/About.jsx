@@ -7,7 +7,7 @@ function About() {
             <div className="card card-bordered w-6/12 mx-auto">
                 <div className="card-body">
                     <h2 className="card-title">Learning Project</h2>
-                    <p>This is a Tailwind CSS and Daisy UI learning project</p>
+                    <p>This is a Tailwind CSS and Daisy UI learning project build with React</p>
                     <div className="card-actions">
                         <Link className='btn btn-sm rounded-btn' to='/'>Home</Link>
                     </div>
