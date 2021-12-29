@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import base from 'daisyui/dist/base'
 import RepoItem from './RepoItem'
 
 function RepoList({repos}) {

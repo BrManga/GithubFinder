@@ -4,13 +4,18 @@ import { useParams, Link } from 'react-router-dom'
 import { useContext, useEffect } from 'react/cjs/react.development'
 import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
-function User({ match }) {
-    const { user, getUser, loading, getUserRepos, repos } = useContext(GithubContext)
+import {getUserAndRepos} from "../context/github/GithubAction"
+function User() {
+    const { user, loading, repos, dispatch } = useContext(GithubContext)
     const params = useParams()
-    useEffect(() => {
-        getUser(params.login)
-        getUserRepos(params.login)
-    }, [])
+    useEffect( () => {
+        dispatch({type:'SET_LOADING'})
+        const getUserData=async ()=>{
+            const userData=await getUserAndRepos(params.login)
+            dispatch({type:'GET_USER_AND_REPOS', payload:userData})            
+        }
+        getUserData()
+    }, [dispatch, params.login ])
     const { name, type, avatar_url, location, bio, blog, twitter_username, login, html_url, followers, following, public_repos, public_gists, hireable } = user
     if (loading) return <h1>Loading..</h1>
     return (
@@ -23,7 +28,7 @@ function User({ match }) {
                     <div className="custom-card-image mb-6 md:mb-0">
                         <div className="rounded-lg shadow-xl card image-full">
                             <figure>
-                                <img src={avatar_url} />
+                                <img src={avatar_url}  alt='avatar'/>
                             </figure>
                             <div className="card-body justify-end">
                                 <h2 className="card-title mb-0">
