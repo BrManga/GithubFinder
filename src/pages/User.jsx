@@ -1,7 +1,6 @@
-import React from 'react'
+import React,{ useContext, useEffect }  from 'react'
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import { useParams, Link } from 'react-router-dom'
-import { useContext, useEffect } from 'react/cjs/react.development'
 import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
 import {getUserAndRepos} from "../context/github/GithubAction"
